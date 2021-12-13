@@ -1,0 +1,221 @@
+{
+	"info": {
+		"_postman_id": "1ac41d64-da89-402b-a878-59b22071d032",
+		"name": "HospitalManagementSystem",
+		"description": "API or Hospital Management System\n\nOne Hospital can have many Doctors and Patients\n\nOne Doctor can have many patients",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Hospital",
+			"item": [
+				{
+					"name": "login_hospital",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.test(\"access_token not empty\", function () {",
+									"    pm.expect(jsonData.access_token).not.eql(undefined);",
+									"});",
+									"",
+									"pm.test(\"refresh token not empty\", function () {",
+									"    pm.expect(jsonData.refresh_token).not.eql(undefined);",
+									"});",
+									"// set access token as environement variable",
+									"if (jsonData.access_token !== undefined) {",
+									"    postman.setEnvironmentVariable(\"jwt_hospital\", jsonData.access_token);",
+									"} else {",
+									"    postman.setEnvironmentVariable(\"access_token\", null);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"abc\",\n    \"password\":\"123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{root_url}}/hospital/login",
+							"host": [
+								"{{root_url}}"
+							],
+							"path": [
+								"hospital",
+								"login"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register_hostpital",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"abc\",\n    \"password\":\"123\"\n}"
+						},
+						"url": {
+							"raw": "{{root_url}}/hospital/register/abc",
+							"host": [
+								"{{root_url}}"
+							],
+							"path": [
+								"hospital",
+								"register",
+								"abc"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register_doctor",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_hospital}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"doc1\",\n    \"username\":\"doc1\",\n    \"password\":\"doc1\"\n}"
+						},
+						"url": {
+							"raw": "{{root_url}}/doctor/register",
+							"host": [
+								"{{root_url}}"
+							],
+							"path": [
+								"doctor",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list_all_doctors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null,
+						"description": "Endpoint for Hospital to get list of all doctors"
+					},
+					"response": []
+				}
+			],
+			"description": "Hospital Resource"
+		},
+		{
+			"name": "Patient",
+			"item": []
+		},
+		{
+			"name": "Doctor",
+			"item": [
+				{
+					"name": "login_doctor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.test(\"access_token not empty\", function () {",
+									"    pm.expect(jsonData.access_token).not.eql(undefined);",
+									"});",
+									"",
+									"pm.test(\"refresh token not empty\", function () {",
+									"    pm.expect(jsonData.refresh_token).not.eql(undefined);",
+									"});",
+									"// set access token as environement variable",
+									"if (jsonData.access_token !== undefined) {",
+									"    postman.setEnvironmentVariable(\"jwt_doctor\", jsonData.access_token);",
+									"} else {",
+									"    postman.setEnvironmentVariable(\"access_token\", null);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"doc1\",\n    \"password\":\"doc1\"\n}"
+						},
+						"url": {
+							"raw": "{{root_url}}/doctor/login",
+							"host": [
+								"{{root_url}}"
+							],
+							"path": [
+								"doctor",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

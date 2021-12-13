@@ -1,0 +1,10 @@
+requests~=2.25.1
+Flask
+Flask-SQLAlchemy
+flask-jwt-extended
+SQLAlchemy~=1.4.19
+Flask-RESTFul
+marshmallow==3.0.0b19
+flask-marshmallow
+marshmallow-sqlalchemy
+python-dotenv
